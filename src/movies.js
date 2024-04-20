@@ -2,7 +2,8 @@
 // _Bonus_: It seems some of the directors had directed multiple movies so they will pop up multiple times in the array of directors.
 // How could you "clean" a bit this array and make it unified (without duplicates)?
 function getAllDirectors(moviesArray) {
-    return moviesArray.map(movie => movie.director)
+    var directors = moviesArray.map(movie => movie.director)
+    return [...new Set(directors)]
 }
 
 // Iteration 2: Steven Spielberg. The best? - How many drama movies did STEVEN SPIELBERG direct?
@@ -53,5 +54,12 @@ function turnHoursToMinutes(moviesArray) {
 
 // BONUS - Iteration 8: Best yearly score average - Best yearly score average
 function bestYearAvg(moviesArray) {
-    
+    var years = [...new Set(moviesArray.map(movie => movie.year))]
+    var averages = years.map(year => {
+        var moviesInYear = moviesArray.filter(movie => movie.year == year)
+        var sum = moviesInYear.reduce((acc, movie) => acc + movie.score ,0)
+        return sum / moviesInYear.length
+    })
+    var index = averages.indexOf(Math.max(...averages))
+    return 'The best year was ' +years[index]+ ' with an average score of ' + Math.max(...averages)
 }
